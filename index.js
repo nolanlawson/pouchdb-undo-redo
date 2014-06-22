@@ -1,8 +1,5 @@
 'use strict';
 
-var utils = require('./pouch-utils');
-
-
 module.exports = function (PouchDB) {
 
   var methods = ['post', 'put', 'bulkDocs', 'remove', 'putAttachment', 'removeAttachment'];
