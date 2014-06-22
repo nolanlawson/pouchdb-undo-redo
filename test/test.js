@@ -6,8 +6,8 @@ var Pouch = require('pouchdb');
 //
 // your plugin goes here
 //
-var helloPlugin = require('../');
-Pouch.plugin(helloPlugin);
+var thePlugin = require('../');
+Pouch.plugin(thePlugin);
 
 var chai = require('chai');
 chai.use(require("chai-as-promised"));
@@ -15,7 +15,7 @@ chai.use(require("chai-as-promised"));
 //
 // more variables you might want
 //
-chai.should(); // var should = chai.should();
+var should = chai.should();
 require('bluebird'); // var Promise = require('bluebird');
 
 var dbs;
@@ -43,9 +43,48 @@ function tests(dbName, dbType) {
     return Pouch.destroy(dbName);
   });
   describe(dbType + ': hello test suite', function () {
-    it('should say hello', function () {
-      return db.sayHello().then(function (response) {
-        response.should.equal('hello');
+
+    it('should let me undo the first change', function () {
+      return db.post({}).then(function () {
+        return db.allDocs();
+      }).then(function (res) {
+        res.rows.should.have.length(1);
+        return db.undo();
+      }).then(function (res) {
+        res.ok.should.equal(true);
+        return db.allDocs();
+      }).then(function (res) {
+        res.rows.should.have.length(0);
+        return db.undo().then(function (res) {
+          should.not.exist(res);
+        }).catch(function (err) {
+          should.exist(err);
+        });
+      });
+    });
+
+    it('should let me redo the first undo', function () {
+      return db.post({}).then(function () {
+        return db.allDocs();
+      }).then(function (res) {
+        res.rows.should.have.length(1);
+        return db.undo();
+      }).then(function (res) {
+        res.ok.should.equal(true);
+        return db.allDocs();
+      }).then(function (res) {
+        res.rows.should.have.length(0);
+        return db.redo();
+      }).then(function (res) {
+        res.ok.should.equal(true);
+        return db.allDocs();
+      }).then(function (res) {
+        res.rows.should.have.length(1);
+        return db.redo().then(function (res) {
+          should.not.exist(res);
+        }).catch(function (err) {
+          should.exist(err);
+        });
       });
     });
   });

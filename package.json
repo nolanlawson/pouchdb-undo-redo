@@ -1,32 +1,33 @@
 {
-  "name": "pouchdb-plugin-seed",
+  "name": "pouchdb-undo-redo",
   "version": "0.1.0",
-  "description": "PouchDB Plugin Seed project",
+  "description": "PouchDB Undo/Redo Plugin",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/pouchdb/plugin-seed.git"
+    "url": "git://github.com/nolanlawson/pouchdb-undo-redo.git"
   },
   "keywords": [
     "pouch",
     "pouchdb",
     "plugin",
-    "seed",
+    "undo",
+    "redo",
     "couch",
     "couchdb"
   ],
   "author": "",
   "license": "Apache",
   "bugs": {
-    "url": "https://github.com/pouchdb/plugin-seed/issues"
+    "url": "https://github.com/nolanlawson/pouchdb-undo-redo/issues"
   },
   "scripts": {
     "test-node": "TEST_DB=testdb,http://localhost:5984/testdb istanbul test ./node_modules/mocha/bin/_mocha test/test.js",
     "test-browser": "./bin/test-browser.js",
     "jshint": "jshint -c .jshintrc *.js test/test.js",
     "test": "npm run jshint && ./bin/run-test.sh",
-    "build": "mkdir -p dist && browserify index.js -o dist/pouchdb.mypluginname.js && npm run min",
-    "min": "uglifyjs dist/pouchdb.mypluginname.js -mc > dist/pouchdb.mypluginname.min.js",
+    "build": "mkdir -p dist && browserify index.js -o dist/pouchdb.undo-redo.js && npm run min",
+    "min": "uglifyjs dist/pouchdb.undo-redo.js -mc > dist/pouchdb.undo-redo.min.js",
     "dev": "browserify test/test.js > test/test-bundle.js && npm run dev-server",
     "dev-server": "./bin/dev-server.js",
     "coverage": "npm test --coverage && istanbul check-coverage --lines 100 --function 100 --statements 100 --branches 100"
