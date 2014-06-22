@@ -7,7 +7,7 @@ var Pouch = require('pouchdb');
 // your plugin goes here
 //
 var thePlugin = require('../');
-thePlugin(Pouch);
+Pouch.plugin(thePlugin);
 
 var chai = require('chai');
 chai.use(require("chai-as-promised"));
@@ -42,10 +42,10 @@ function tests(dbName, dbType) {
   afterEach(function () {
     return Pouch.destroy(dbName);
   });
-  describe(dbType + ': hello test suite', function () {
+  describe(dbType + ': undo/redo test suite', function () {
 
     it('should let me undo the first change', function () {
-      return db.post({}).then(function () {
+      return db.postUndoable({}).then(function () {
         return db.allDocs();
       }).then(function (res) {
         res.rows.should.have.length(1);
@@ -62,9 +62,9 @@ function tests(dbName, dbType) {
         });
       });
     });
-/*
+
     it('should let me redo the first undo', function () {
-      return db.post({}).then(function () {
+      return db.postUndoable({}).then(function () {
         return db.allDocs();
       }).then(function (res) {
         res.rows.should.have.length(1);
@@ -86,6 +86,6 @@ function tests(dbName, dbType) {
           should.exist(err);
         });
       });
-    });*/
+    });
   });
 }
