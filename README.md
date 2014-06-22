@@ -1,5 +1,7 @@
-PouchDB Plugin Seed
+PouchDB Undo/Redo plugin
 =====
+
+**Work in progress.  Nothing to see here, move along.**
 
 [![Build Status](https://travis-ci.org/pouchdb/plugin-seed.svg)](https://travis-ci.org/pouchdb/plugin-seed)
 
